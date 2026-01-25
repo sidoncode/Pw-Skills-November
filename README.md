@@ -19,4 +19,5 @@
 | 17-Jan    | [Link](https://miro.com/app/board/uXjVGPXm_d4=/?share_link_id=609355641732) |
 | 18-Jan    | [Link](https://miro.com/app/board/uXjVGOmFtsw=/?share_link_id=65267271551) |
 | 24-Jan    | [Link](https://miro.com/app/board/uXjVGL5d6KU=/?share_link_id=839567573530) |
+| 25-Jan    | [Link](https://miro.com/app/board/uXjVGLPe6a0=/?share_link_id=698699913112) |
 
