@@ -21,3 +21,6 @@
 | 24-Jan | Python Automation in Practice | [Link](https://miro.com/app/board/uXjVGL5d6KU=/?share_link_id=839567573530) |
 | 25-Jan | End-to-End DevOps Automation with Python | [Link](https://miro.com/app/board/uXjVGLPe6a0=/?share_link_id=698699913112) |
 | 31-Jan | Continuous Integration Basics | [Link](https://miro.com/app/board/uXjVGHgwVRU=/?share_link_id=430309387830) |
+| 01-Feb | • Building/testing code, artifact management • Notifications, reporting, writing tests for CI | [Link](https://miro.com/app/board/uXjVGH3dq-E=/?share_link_id=623169559582) |
+
+
