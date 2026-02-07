@@ -22,5 +22,6 @@
 | 25-Jan | End-to-End DevOps Automation with Python | [Link](https://miro.com/app/board/uXjVGLPe6a0=/?share_link_id=698699913112) |
 | 31-Jan | Continuous Integration Basics | [Link](https://miro.com/app/board/uXjVGHgwVRU=/?share_link_id=430309387830) |
 | 01-Feb | • Building/testing code, artifact management • Notifications, reporting, writing tests for CI | [Link](https://miro.com/app/board/uXjVGH3dq-E=/?share_link_id=623169559582) |
+| 07-Feb | Jenkins Fundamentals | [Link](https://miro.com/app/board/uXjVGENznTo=/?share_link_id=391201037160) |
 
 
