@@ -40,7 +40,9 @@ pipeline {
     }
 }
 
-Explanation
+<br>
+
+### Explanation
 
 post { success { ... } } runs only if the pipeline succeeds.
 
