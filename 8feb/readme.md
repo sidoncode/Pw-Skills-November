@@ -2,6 +2,8 @@
 
 This will trigger another pipeline job after this one completes.
 
+<code>
+    
 pipeline {
     agent any
 
@@ -39,6 +41,8 @@ pipeline {
         }
     }
 }
+
+</code>
 
 <br>
 
