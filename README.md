@@ -24,7 +24,7 @@
 | 01-Feb | • Building/testing code, artifact management • Notifications, reporting, writing tests for CI | [Link](https://miro.com/app/board/uXjVGH3dq-E=/?share_link_id=623169559582) |
 | 07-Feb | Jenkins Fundamentals | [Link](https://miro.com/app/board/uXjVGENznTo=/?share_link_id=391201037160) |
 | 08-Feb | Jenkins Advance: pipelines, Schudeling | [Link](https://miro.com/app/board/uXjVGDjTO2o=/?share_link_id=636300392706) |
-| 14-Feb | Software Testing Foundations | [Link](https://miro.com/app/board/uXjVGA5SNJ8=/?share_link_id=958379334550) |
+| 14-Feb | Software Testing Foundations (pytest,Junit) | [Link](https://miro.com/app/board/uXjVGA5SNJ8=/?share_link_id=958379334550) |
 
 
 
