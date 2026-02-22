@@ -26,6 +26,7 @@
 | 08-Feb | Jenkins Advance: pipelines, Schudeling | [Link](https://miro.com/app/board/uXjVGDjTO2o=/?share_link_id=636300392706) |
 | 14-Feb | Software Testing Foundations (pytest,Junit) | [Link](https://miro.com/app/board/uXjVGA5SNJ8=/?share_link_id=958379334550) |
 | 21-Feb | BDD / TDD with CI/CD  | [Link](https://miro.com/app/board/uXjVG9fzPmw=/?share_link_id=813994998325) |
+| 22-Feb | BDD / TDD with CI/CD: Soak - Stress Testing  | [Link](https://miro.com/app/board/uXjVG8tH6fw=/?share_link_id=516065732830) |
 
 
 
