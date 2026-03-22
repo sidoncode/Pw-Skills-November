@@ -33,8 +33,7 @@
 | 8th-March | Configuration Management: Ansible  | [Link](https://miro.com/app/board/uXjVG1K0cdE=/?share_link_id=595149437210) |
 | 14th-March | Configuration Management: Ansible - 2  | [Link](https://miro.com/app/board/uXjVGxm0pfA=/?share_link_id=685542313014) |
 | 15th-March | Ansible - Ec2 | [Link](https://miro.com/app/board/uXjVGx7wads=/?share_link_id=970618789554) |
-
-
+| 22nd-March | Ansible - Ec2 ( iam, handler, conditions ) | [Link](https://miro.com/app/board/uXjVGufXwmk=/?share_link_id=582419052972) |
 
 
 
