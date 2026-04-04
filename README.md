@@ -35,7 +35,7 @@
 | 15th-March | Ansible - Ec2 | [Link](https://miro.com/app/board/uXjVGx7wads=/?share_link_id=970618789554) |
 | 22nd-March | Ansible - Ec2 ( iam, handler, conditions ) | [Link](https://miro.com/app/board/uXjVGufXwmk=/?share_link_id=582419052972) |
 | 28nd-March | Ansible - Core | [Link](https://miro.com/app/board/uXjVGqt46Mw=/?share_link_id=22050402909) |
-
+| 04th-April | Ansible - core - 2 | [Link](https://miro.com/app/board/uXjVGnCRyfo=/?share_link_id=947876562617) |
 
 
 
