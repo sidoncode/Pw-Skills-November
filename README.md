@@ -37,7 +37,7 @@
 | 28nd-March | Ansible - Core | [Link](https://miro.com/app/board/uXjVGqt46Mw=/?share_link_id=22050402909) |
 | 04th-April | Ansible - core - 2 | [Link](https://miro.com/app/board/uXjVGnCRyfo=/?share_link_id=947876562617) |
 | 05th-April | Docker fundamentals | [Link](https://miro.com/app/board/uXjVGnSOSTE=/?share_link_id=714108921712) |
-
+| 11th-April | Docker Compose | [Link](https://miro.com/app/board/uXjVGkQEKqQ=/?share_link_id=810487091206) |
 
 
 
