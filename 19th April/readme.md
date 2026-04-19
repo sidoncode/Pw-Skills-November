@@ -60,6 +60,7 @@ eksctl version
 ```
 
 </br>
+
 ```
 winget install -e --id Kubernetes.kubectl
 winget install -e --id eksctl.eksctl
