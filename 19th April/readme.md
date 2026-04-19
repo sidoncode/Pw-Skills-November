@@ -29,3 +29,5 @@ AmazonEKSWorkerNodePolicy
 AWSCloudFormationFullAccess
 
 ```
+## step2: after that -> create user -> security credentials
+create access key -> click and create a access key
