@@ -117,7 +117,7 @@ kubectl expose deployment hpa-demo --type=LoadBalancer --port=80
 kubectl autoscale deployment hpa-demo \
   --cpu-percent=50 \
   --min=2 \
-  --max=10
+  --max=3
 
 
 
