@@ -40,6 +40,7 @@
 | 11th-April | Docker Compose | [Link](https://miro.com/app/board/uXjVGkQEKqQ=/?share_link_id=810487091206) |
 | 12th-April | K8's Introduction | [Link](https://miro.com/app/board/uXjVGjmbzCA=/?share_link_id=403169029698) |
 | 18th-April | K8's configmap , helmChart | [Link](https://miro.com/app/board/uXjVGg-sT3s=/?share_link_id=571762810884) |
+| 19th-April | K8's HPA  | [Link](https://miro.com/app/board/uXjVGgM1zPg=/?share_link_id=14641127207) |
 
 
 
