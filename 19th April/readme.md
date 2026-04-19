@@ -8,3 +8,12 @@ search -> IAM -> left side click on user -> create user
 <img width="984" height="424" alt="image" src="https://github.com/user-attachments/assets/4d760cf6-eed2-4db8-9fa1-59617a9cc01e" />
 
 </br>
+
+click on attach policy directly:
+
+</br>
+
+<img width="1398" height="346" alt="image" src="https://github.com/user-attachments/assets/0d5ff012-e0fd-4e66-ae38-a4d3cbeb31fc" />
+
+</br>
+
