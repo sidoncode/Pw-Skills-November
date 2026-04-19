@@ -35,11 +35,13 @@ create access key -> click and create a access key
 ## step3: create and configure eks cluster
 >> aws configure
 
->> eksctl create cluster \
+```
+eksctl create cluster \
   --name my-cluster \
   --region ap-south-1 \
   --node-type t3.medium \
   --nodes 2
 
+```
 
 >> kubectl get nodes
