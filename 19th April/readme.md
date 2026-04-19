@@ -44,4 +44,28 @@ eksctl create cluster \
 
 ```
 
->> kubectl get nodes
+
+</br>
+
+```
+kubectl get nodes
+```
+
+</br>
+
+```
+brew tap aws/tap
+brew install aws/tap/eksctl
+eksctl version
+```
+
+</br>
+```
+winget install -e --id Kubernetes.kubectl
+winget install -e --id eksctl.eksctl
+```
+</br>
+
+
+
+
