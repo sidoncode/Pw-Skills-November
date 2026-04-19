@@ -129,6 +129,8 @@ kubectl run -i --tty load-generator --image=busybox /bin/sh
 
 kubectl get hpa -w
 
+while true; do wget -q -O- http://<EXTERNAL-IP>; done
+
 
 
 
