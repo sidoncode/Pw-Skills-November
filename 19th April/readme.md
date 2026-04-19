@@ -17,3 +17,15 @@ click on attach policy directly:
 
 </br>
 
+```
+
+AdministratorAccess
+AmazonEC2FullAccess
+AmazonECS_FullAccess
+AmazonEKS_CNI_Policy
+AmazonEKSClusterPolicy
+AmazonEKSComputePolicy
+AmazonEKSWorkerNodePolicy
+AWSCloudFormationFullAccess
+
+```
