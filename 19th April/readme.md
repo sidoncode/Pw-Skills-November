@@ -67,6 +67,66 @@ winget install -e --id eksctl.eksctl
 ```
 </br>
 
+```
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+verify:
+
+kubectl get deployment metrics-server -n kube-system
+
+```
+
+</br>
+
+```
+deployment.yaml file
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpa-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hpa-demo
+  template:
+    metadata:
+      labels:
+        app: hpa-demo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 200m
+        ports:
+        - containerPort: 80
+
+</br>
+
+kubectl apply -f deployment.yaml
+
+kubectl expose deployment hpa-demo --type=LoadBalancer --port=80
+
+kubectl autoscale deployment hpa-demo \
+  --cpu-percent=50 \
+  --min=2 \
+  --max=10
+
+
+
+kubectl get hpa
+
+
+kubectl run -i --tty load-generator --image=busybox /bin/sh
+
+
+kubectl get hpa -w
+
 
 
 
