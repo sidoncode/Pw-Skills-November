@@ -108,6 +108,8 @@ spec:
 
 </br>
 
+```
+
 kubectl apply -f deployment.yaml
 
 kubectl expose deployment hpa-demo --type=LoadBalancer --port=80
