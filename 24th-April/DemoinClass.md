@@ -29,7 +29,7 @@ kubectl delete pod my-pod
 kubectl get pods
 ```
 
-**Result: Pod deleted = Gone forever ❌**
+**Result: Pod deleted = Gone forever**
 
 ---
 
@@ -49,7 +49,7 @@ kubectl delete pod $(kubectl get pods -o jsonpath='{.items[0].metadata.name}')
 kubectl get pods
 ```
 
-**Result: Pod deleted = Auto-recreated ✅**
+**Result: Pod deleted = Auto-recreated**
 
 ---
 
@@ -69,7 +69,7 @@ kubectl delete pod $(kubectl get pods -o jsonpath='{.items[0].metadata.name}')
 kubectl get pods
 ```
 
-**Result: Always maintains 3 pods ✅**
+**Result: Always maintains 3 pods**
 
 ---
 
@@ -91,7 +91,7 @@ kubectl get pods
 kubectl describe deployment myapp | grep Image
 ```
 
-**Result: Old pods replaced with new image, no downtime ✅**
+**Result: Old pods replaced with new image, no downtime**
 
 ---
 
@@ -132,7 +132,7 @@ kubectl delete pod $(kubectl get pods -l tier=frontend -o jsonpath='{.items[0].m
 kubectl get pods
 ```
 
-**Result: ReplicaSet maintains 2 pods automatically ✅**
+**Result: ReplicaSet maintains 2 pods automatically**
 
 ---
 
@@ -198,7 +198,7 @@ kubectl delete ns prod
 
 | | Standalone Pod | Deployment | ReplicaSet |
 |---|---|---|---|
-| Pod deleted | GONE ❌ | Auto-recreates ✅ | Auto-recreates ✅ |
+| Pod deleted | GONE  | Auto-recreates  | Auto-recreates  |
 | Scale | Manual | `--replicas=N` | `--replicas=N` |
 | Update image | Manual | Automatic | Requires Deployment |
 | Best for | Learning | Production (99%) | Low-level control |
