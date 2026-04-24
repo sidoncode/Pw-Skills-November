@@ -41,6 +41,14 @@
 | 12th-April | K8's Introduction | [Link](https://miro.com/app/board/uXjVGjmbzCA=/?share_link_id=403169029698) |
 | 18th-April | K8's configmap , helmChart | [Link](https://miro.com/app/board/uXjVGg-sT3s=/?share_link_id=571762810884) |
 | 19th-April | K8's HPA  | [Link](https://miro.com/app/board/uXjVGgM1zPg=/?share_link_id=14641127207) |
+| 25th-April | "Scaling & Managing Kubernetes
+• Automatically adjusting worker nodes in the cluster
+• Implementing high availability (multiple master nodes, failover)
+
+IaC Introduction
+• Managing infrastructure through code vs. manual processes
+• How IaC fits into DevOps workflows & CI/CD pipelines
+• Role of IaC in cloud infrastructure management & versioning"  | [Link](https://miro.com/app/board/uXjVGgM1zPg=/?share_link_id=14641127207) |
 
 
 
