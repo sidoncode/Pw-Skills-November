@@ -41,4 +41,4 @@
 | 35 | 12th-April | K8's Introduction | [Link](https://miro.com/app/board/uXjVGjmbzCA=/?share_link_id=403169029698) |
 | 36 | 18th-April | K8's configmap , helmChart | [Link](https://miro.com/app/board/uXjVGg-sT3s=/?share_link_id=571762810884) |
 | 37 | 19th-April | K8's HPA | [Link](https://miro.com/app/board/uXjVGgM1zPg=/?share_link_id=14641127207) |
-| 38 | 25th-April | Kubernetes Cluster Scaling and Infrastructure as Code Foundations | [Link]() |
+| 38 | 25th-April | Kubernetes Cluster Scaling and Infrastructure as Code Foundations | [Link](https://miro.com/app/board/uXjVHcqr1VQ=/?share_link_id=36015676600) |
