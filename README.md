@@ -42,3 +42,7 @@
 | 36 | 18th-April | K8's configmap , helmChart | [Link](https://miro.com/app/board/uXjVGg-sT3s=/?share_link_id=571762810884) |
 | 37 | 19th-April | K8's HPA | [Link](https://miro.com/app/board/uXjVGgM1zPg=/?share_link_id=14641127207) |
 | 38 | 25th-April | "Scaling & Managing Kubernetes • Automatically adjusting worker nodes in the cluster • Implementing high availability (multiple master nodes, failover) IaC Introduction• Managing infrastructure through code vs. manual processes • How IaC fits into DevOps workflows & CI/CD pipelines • Role of IaC in cloud infrastructure management & versioning" | [Link](https://miro.com/app/board/uXjVHcqr1VQ=/?share_link_id=36015676600) |
+| 39 | 26th-April | "Introduction to Terraform & Getting Started • Overview of Terraform (cloud-agnostic, declarative syntax, HCL) • Providers, resources, state, modules, workspaces, backends • Installation (Linux, macOS, Windows) • Terraform workflow (init, plan, apply, destroy) • Basic structure (.tf files, variables.tf, outputs.tf) • What are Terraform providers?" | [Link](https://miro.com/app/board/uXjVHc_-Uek=/?share_link_id=899959972754) |
+
+
+
