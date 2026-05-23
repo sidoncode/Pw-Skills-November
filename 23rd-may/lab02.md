@@ -1,127 +1,136 @@
-# 🚀 Jenkins Pipeline Logs → ELK Stack on AWS EC2
+# 🚀 Jenkins Pipeline Logs → ELK Stack on AWS EC2 (Docker Compose)
 
-A step-by-step guide to ship Jenkins pipeline logs to the ELK Stack (Elasticsearch, Logstash, Kibana) running on AWS EC2 Ubuntu.
+Ship Jenkins pipeline logs to Elasticsearch, visualize in Kibana — all running via Docker Compose on AWS EC2 Ubuntu.
 
 ---
 
 ## 📐 Architecture
 
 ```
-┌─────────────────┐     TCP Logs      ┌──────────────────────────────────────────┐
-│                 │ ────────────────► │                                          │
-│    Jenkins      │                   │   Logstash → Elasticsearch → Kibana      │
-│  EC2 Instance 1 │                   │            EC2 Instance 2                │
-│                 │                   │                                          │
-└─────────────────┘                   └──────────────────────────────────────────┘
+┌──────────────────────┐          ┌─────────────────────────────────────────────────┐
+│                      │          │              Docker Compose (EC2 #2)            │
+│   Jenkins (EC2 #1)   │  TCP     │  ┌───────────┐   ┌───────────┐   ┌──────────┐  │
+│   Port 8080          │ ──────►  │  │ Logstash  │──►│  Elastic  │──►│  Kibana  │  │
+│   Sends logs on 5000 │          │  │ :5000     │   │  :9200    │   │  :5601   │  │
+│                      │          │  └───────────┘   └───────────┘   └──────────┘  │
+└──────────────────────┘          └─────────────────────────────────────────────────┘
 ```
-
-| Component     | Role                        |
-|---------------|-----------------------------|
-| **Jenkins**   | Generate pipeline logs      |
-| **Logstash**  | Parse & filter logs         |
-| **Elasticsearch** | Store & search logs     |
-| **Kibana**    | Visualize & dashboards      |
 
 ---
 
 ## 🖥️ Prerequisites
 
-- 2 × AWS EC2 Ubuntu 22.04 LTS instances
-  - **EC2 #1** — Jenkins (`t2.medium` or higher)
-  - **EC2 #2** — ELK Stack (`t3.medium` minimum — ELK is RAM-heavy)
-- SSH access to both instances
+| Requirement | Detail |
+|-------------|--------|
+| EC2 #1 | Ubuntu 22.04+, `t2.medium`, Jenkins |
+| EC2 #2 | Ubuntu 22.04+, `t3.medium` min, Docker + ELK |
+| Docker | 20.x or higher |
+| Docker Compose | v2 plugin |
 
 ---
 
-## 🔒 Security Group Rules (ELK Instance)
+## 🔒 EC2 Security Group Rules (ELK Instance)
 
-| Port | Protocol | Source          | Purpose             |
-|------|----------|-----------------|---------------------|
-| 22   | TCP      | Your IP         | SSH                 |
-| 5601 | TCP      | Your IP         | Kibana UI           |
-| 9200 | TCP      | Jenkins SG      | Elasticsearch API   |
-| 5044 | TCP      | Jenkins SG      | Logstash Beats      |
-| 5000 | TCP      | Jenkins SG      | Logstash TCP input  |
+| Port | Protocol | Source | Purpose |
+|------|----------|--------|---------|
+| 22 | TCP | Your IP | SSH |
+| 5601 | TCP | Your IP | Kibana UI |
+| 9200 | TCP | Jenkins SG | Elasticsearch API |
+| 5044 | TCP | Jenkins SG | Logstash Beats |
+| 5000 | TCP | Jenkins SG | Logstash TCP input |
 
 ---
 
-## Step 1 — Install ELK Stack on EC2 #2
-
-SSH into your ELK instance and run:
+## Step 1 — Install Docker on EC2 #2
 
 ```bash
-# Update & add Elastic repo
-sudo apt update && sudo apt install -y apt-transport-https curl gnupg
-
-curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch \
-  | sudo gpg --dearmor -o /usr/share/keyrings/elastic.gpg
-
-echo "deb [signed-by=/usr/share/keyrings/elastic.gpg] \
-  https://artifacts.elastic.co/packages/8.x/apt stable main" \
-  | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
-
 sudo apt update
+sudo apt install -y docker.io docker-compose-plugin
 
-# Install Elasticsearch, Logstash, and Kibana
-sudo apt install -y elasticsearch logstash kibana
+# Start Docker
+sudo systemctl enable --now docker
+
+# Allow ubuntu user to run docker without sudo
+sudo usermod -aG docker ubuntu
+
+# Apply group change without re-login
+newgrp docker
 ```
 
 ---
 
-## Step 2 — Configure Elasticsearch
+## Step 2 — Create Project Folder
 
 ```bash
-sudo nano /etc/elasticsearch/elasticsearch.yml
+mkdir ~/elk-stack && cd ~/elk-stack
 ```
-
-```yaml
-cluster.name: jenkins-logs
-node.name: elk-node-1
-network.host: 0.0.0.0
-http.port: 9200
-xpack.security.enabled: false   # Keep simple for internal use
-```
-
-```bash
-sudo systemctl enable --now elasticsearch
-
-# Verify (wait ~30s after start)
-curl http://localhost:9200
-```
-
-✅ You should see a JSON response with cluster info.
 
 ---
 
-## Step 3 — Configure Kibana
+## Step 3 — Create docker-compose.yml
 
 ```bash
-sudo nano /etc/kibana/kibana.yml
-```
+tee docker-compose.yml << 'EOF'
+version: '3.8'
 
-```yaml
-server.port: 5601
-server.host: "0.0.0.0"
-elasticsearch.hosts: ["http://localhost:9200"]
-```
+services:
 
-```bash
-sudo systemctl enable --now kibana
-```
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - elk
 
-Access Kibana at: `http://<ELK-EC2-PUBLIC-IP>:5601`
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.10
+    container_name: logstash
+    ports:
+      - "5000:5000/tcp"
+      - "5044:5044"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.10
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+
+volumes:
+  esdata:
+
+networks:
+  elk:
+    driver: bridge
+EOF
+```
 
 ---
 
-## Step 4 — Configure Logstash
-
-Create a Jenkins pipeline config:
+## Step 4 — Create Logstash Pipeline Config
 
 ```bash
-sudo nano /etc/logstash/conf.d/jenkins.conf
-```
+mkdir -p logstash/pipeline
 
-```ruby
+tee logstash/pipeline/jenkins.conf << 'EOF'
 input {
   tcp {
     port => 5000
@@ -130,17 +139,6 @@ input {
 }
 
 filter {
-  if [message] {
-    grok {
-      match => {
-        "message" => "%{TIMESTAMP_ISO8601:timestamp} \[%{DATA:job_name}\] %{GREEDYDATA:log_message}"
-      }
-    }
-    date {
-      match => ["timestamp", "ISO8601"]
-      target => "@timestamp"
-    }
-  }
   mutate {
     add_field => { "source" => "jenkins" }
   }
@@ -148,23 +146,64 @@ filter {
 
 output {
   elasticsearch {
-    hosts => ["http://localhost:9200"]
+    hosts => ["http://elasticsearch:9200"]
     index => "jenkins-logs-%{+YYYY.MM.dd}"
   }
-  stdout { codec => rubydebug }   # Remove in production
+  stdout { codec => rubydebug }
 }
-```
-
-```bash
-sudo systemctl enable --now logstash
-
-# Watch for errors
-sudo journalctl -u logstash -f
+EOF
 ```
 
 ---
 
-## Step 5 — Install Jenkins on EC2 #1
+## Step 5 — Set System Memory Limit
+
+> Required for Elasticsearch to start correctly.
+
+```bash
+sudo sysctl -w vm.max_map_count=262144
+echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
+```
+
+---
+
+## Step 6 — Start the Stack
+
+```bash
+docker compose up -d
+```
+
+---
+
+## Step 7 — Verify Everything is Running
+
+```bash
+# Check all containers
+docker compose ps
+
+# Test Elasticsearch (wait ~30 seconds after start)
+curl http://localhost:9200
+
+# Check Logstash logs
+docker compose logs logstash
+
+# Check Kibana logs
+docker compose logs kibana
+```
+
+✅ Expected Elasticsearch response:
+```json
+{
+  "name" : "elk-node-1",
+  "cluster_name" : "jenkins-logs",
+  "version" : { "number" : "7.17.10" },
+  "tagline" : "You Know, for Search"
+}
+```
+
+---
+
+## Step 8 — Install Jenkins on EC2 #1
 
 ```bash
 # Install Java
@@ -185,30 +224,30 @@ sudo systemctl enable --now jenkins
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 
-Access Jenkins at: `http://<EC2-1-PUBLIC-IP>:8080` and complete the setup wizard.
+Access Jenkins at: `http://<EC2-1-PUBLIC-IP>:8080`
 
 ---
 
-## Step 6 — Send Jenkins Logs to Logstash
+## Step 9 — Connect Jenkins to Logstash
 
-Choose **one** of the three options below:
+Choose **one** of the three options:
 
 ### ✅ Option A — Logstash Plugin (Recommended)
 
 1. Go to **Jenkins → Manage Jenkins → Plugins**
-2. Search for **Logstash** and install it
-3. Go to **Manage Jenkins → Logstash** and configure:
+2. Search **Logstash** → Install
+3. Go to **Manage Jenkins → Logstash** and set:
 
-| Setting             | Value                          |
-|---------------------|--------------------------------|
-| Enable sending logs | ✅ Checked                    |
-| Indexer type        | TCP                            |
-| Host                | `<ELK-EC2-PRIVATE-IP>`        |
-| Port                | `5000`                         |
+| Setting | Value |
+|---------|-------|
+| Enable sending logs | ✅ |
+| Indexer type | TCP |
+| Host | `<ELK-EC2-PRIVATE-IP>` |
+| Port | `5000` |
 
 ---
 
-### ⚙️ Option B — Jenkinsfile (Pipeline as Code)
+### ⚙️ Option B — Jenkinsfile
 
 ```groovy
 pipeline {
@@ -218,7 +257,6 @@ pipeline {
       steps {
         sh '''
           echo "Starting build..."
-          # Your build commands here
           echo "Build complete"
         '''
       }
@@ -234,9 +272,9 @@ pipeline {
 
 ---
 
-### 🪶 Option C — Filebeat (Lightweight, No Plugin Needed)
+### 🪶 Option C — Filebeat (No Plugin)
 
-Install Filebeat on the Jenkins EC2:
+Install Filebeat on Jenkins EC2:
 
 ```bash
 sudo apt install -y filebeat
@@ -258,16 +296,14 @@ output.logstash:
 sudo systemctl enable --now filebeat
 ```
 
-> **Note:** For Filebeat, add a `beats` input block to your Logstash config using `port => 5044`.
-
 ---
 
-## Step 7 — Kibana Dashboard Setup
+## Step 10 — Kibana Dashboard Setup
 
-1. Open `http://<ELK-EC2-IP>:5601`
-2. Navigate to **Stack Management → Index Patterns**
+1. Open `http://<ELK-EC2-PUBLIC-IP>:5601`
+2. Go to **Stack Management → Index Patterns**
 3. Create pattern: `jenkins-logs-*` with time field `@timestamp`
-4. Go to **Discover** → select `jenkins-logs-*` to view live logs
+4. Go to **Discover** → select `jenkins-logs-*` to see live logs
 5. Build visualizations:
    - 📊 Bar chart by job name
    - 📈 Error rate over time
@@ -275,47 +311,62 @@ sudo systemctl enable --now filebeat
 
 ---
 
-## 🔧 Troubleshooting
-
-```bash
-# Check all ELK services at once
-sudo systemctl status elasticsearch logstash kibana
-
-# Verify Elasticsearch has the jenkins index
-curl "http://localhost:9200/_cat/indices?v" | grep jenkins
-
-# Tail recent Logstash activity
-sudo journalctl -u logstash --since "5 min ago"
-
-# Test TCP connection from Jenkins EC2
-echo '{"message":"test log"}' | nc <ELK-PRIVATE-IP> 5000
-```
-
-### Common Issues
-
-| Problem | Fix |
-|---------|-----|
-| Logs not arriving in Elasticsearch | Check EC2 security group — port 5000/5044 must be open from Jenkins SG |
-| Kibana blank / not loading | Wait 60–90s after start; check `sudo journalctl -u kibana -f` |
-| Elasticsearch `OutOfMemoryError` | Increase JVM heap: edit `/etc/elasticsearch/jvm.options`, set `-Xms2g -Xmx2g` |
-| Logstash `connection refused` | Ensure Elasticsearch started first; check port 9200 is listening |
-
----
-
 ## 📁 Project Structure
 
 ```
-jenkins-elk-setup/
-├── README.md
+elk-stack/
+├── docker-compose.yml
 └── logstash/
-    └── jenkins.conf       # Logstash pipeline config
+    └── pipeline/
+        └── jenkins.conf
+```
+
+---
+
+## 🔧 Useful Docker Commands
+
+```bash
+# Stop the stack
+docker compose down
+
+# Stop and delete all data volumes
+docker compose down -v
+
+# Restart a single service
+docker compose restart logstash
+
+# Live logs from all services
+docker compose logs -f
+
+# Live logs from one service
+docker compose logs -f elasticsearch
+```
+
+---
+
+## 🔧 Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| Elasticsearch won't start | Run `sudo sysctl -w vm.max_map_count=262144` |
+| Kibana shows "server not ready" | Wait 60s; Elasticsearch takes time to boot |
+| Logs not arriving in Kibana | Check EC2 SG — port 5000 must be open from Jenkins SG |
+| Container keeps restarting | Run `docker compose logs elasticsearch` to check errors |
+| `curl localhost:9200` refused | Container still starting — wait 30s and retry |
+
+```bash
+# Test TCP connection from Jenkins EC2 to Logstash
+echo '{"message":"test log","source":"jenkins"}' | nc <ELK-PRIVATE-IP> 5000
+
+# Check Elasticsearch index was created
+curl "http://localhost:9200/_cat/indices?v" | grep jenkins
 ```
 
 ---
 
 ## 📚 References
 
-- [Elastic Documentation](https://www.elastic.co/guide/index.html)
+- [Elastic Docker Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/docker.html)
 - [Jenkins Logstash Plugin](https://plugins.jenkins.io/logstash/)
 - [Filebeat Reference](https://www.elastic.co/guide/en/beats/filebeat/current/index.html)
 
