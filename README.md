@@ -53,4 +53,5 @@
 | 47 | 30th May | "Cloud Fundamentals" | [Link](https://miro.com/app/board/uXjVHMX36Yw=/?share_link_id=874880739891) |
 | 47 | 31th-May | "AWS Security and Compute Essentials" | [Link](https://miro.com/app/board/uXjVHLn3zKg=/?share_link_id=359392675763) |
 | 48 | 6th-June | "Core AWS Services: Lambda, Storage, Networking, and Traffic Management" | [Link](https://miro.com/app/board/uXjVHJe_Z_U=/?share_link_id=638619433394) |
+| 49 | 7th-June | "AWS Data, Monitoring, Deployment, and Infrastructure Automation Essentials" | [Link](https://miro.com/app/board/uXjVHIlAG9o=/?share_link_id=614174680659) |
 
