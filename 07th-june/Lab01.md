@@ -190,20 +190,30 @@ Console → **CodePipeline** → **Create pipeline**.
 > If the connection shows **"Pending"**, click into it and finish the authorization handshake until its status is **"Available"** — a pending connection silently blocks the Source stage.
 
 ### Step 3: Build
-- Provider: **AWS CodeBuild** → **Create project** (opens a popup)
-  - Project name: **`sample-build`**
-  - Environment image: **Managed image**, OS **Amazon Linux**, latest standard runtime
-  - **✅ Privileged** — REQUIRED, or Docker builds fail
-  - Add these **environment variables**:
 
-    | Name | Value |
-    |---|---|
-    | `AWS_ACCOUNT_ID` | your 12-digit account ID |
-    | `IMAGE_REPO_NAME` | `sample-app` |
-    | `CONTAINER_NAME` | `sample-app` |
+Provider: **AWS CodeBuild** → **Create project** (opens the "Create build project" page). Fill it in top to bottom — the two settings people miss (Privileged + environment variables) are near the bottom under a collapsed section, so don't jump to "Continue" early.
 
-  - Buildspec: **Use a buildspec file** (it reads `buildspec.yml` from your repo)
-  - **Continue to CodePipeline** → Next
+1. **Project name** — `sample-build`.
+2. **Project type** — leave **Default project** (not Runner project).
+3. **Environment image** — **Managed image**.
+4. **Compute** — choose **EC2**, *not* Lambda. Lambda compute can't run privileged Docker builds, so `docker build` would fail. EC2 is required for building images.
+5. **Running mode** — leave **Container**. **Operating system** **Amazon Linux**, **Runtime** **Standard**, **Image** the latest `aws/codebuild/amazonlinux-x86_64-standard:*`, **Image version** "Always use the latest" — all fine as defaulted.
+6. **Service role** — **New service role**, name `codebuild-sample-build-service-role`. **Note this name down** — you attach an ECR permission to it in Part 5, and the build can't push without it.
+7. **Expand "Additional configuration"** — this section is collapsed and holds the two critical settings:
+   - **Privileged** — turn **ON**. Required, or `docker build` fails. (Leave the newer "Docker server" option unchecked; the privileged flag is all you need.)
+   - **Environment variables** (Type = Plaintext for all three):
+
+     | Name | Value |
+     |---|---|
+     | `AWS_ACCOUNT_ID` | your 12-digit account ID |
+     | `IMAGE_REPO_NAME` | `sample-app` |
+     | `CONTAINER_NAME` | `sample-app` |
+
+8. **Buildspec** — select **Use a buildspec file**. Leave the name blank so it reads `buildspec.yml` from your repo root.
+9. **Logs** — leave **CloudWatch logs** as-is (default is fine; it helps you debug failed builds).
+10. **Continue to CodePipeline** → Next.
+
+Compute size (2 vCPUs / 4 GiB) and everything else can stay at defaults.
 
 ### Step 4: Deploy
 - Provider: **Amazon ECS**
