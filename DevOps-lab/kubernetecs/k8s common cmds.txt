@@ -1,0 +1,15 @@
+First you need to create the namespace likes this
+
+kubectl create ns nameOfYourNamespace
+Then you create your deployment under your namespace
+
+kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml -n examplenamespace
+The ns at
+
+kubectl create ns nameOfYourNamespace
+stands for namespace
+
+The -n
+
+kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml -n examplenamespace
+stands for --namespace

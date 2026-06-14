@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod-affinity
+  labels:
+    app: nginx
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disk
+            operator: In
+            values:
+            - ssd
+  containers:
+  - name: nginx-container
+    image: quay.io/gauravkumar9130/nginx

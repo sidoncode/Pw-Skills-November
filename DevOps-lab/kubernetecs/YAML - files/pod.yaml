@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-var-pod
+spec:
+  containers:
+  - name: my-container
+    image: quay.io/gauravkumar9130/nginx
+    env:
+    - name: MY_ENV_VARIABLE
+      valueFrom:
+        configMapKeyRef:
+          name: my-config
+          key: MY_ENV_VARIABLE
+    volumeMounts:
+    - name: env-var-volume
+      mountPath: "/etc/my-config"
+  volumes:
+  - name: env-var-volume
+    configMap:
+      name: my-config

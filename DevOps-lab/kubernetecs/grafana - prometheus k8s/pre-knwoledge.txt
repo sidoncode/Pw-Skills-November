@@ -1,0 +1,28 @@
+Lab Details
+This Lab Walks You Through Installing Prometheus along with Grafana for Monitoring a Kubernetes Cluster.
+You will practice using the Whiz terminal to access a Kubernetes cluster.
+Duration: 60 minutes
+
+Introduction
+What is Prometheus? 
+Prometheus is an open-source systems monitoring and alerting toolkit originally developed by SoundCloud. It is intended to gather metrics and monitor a range of systems, containers, and applications within a modern and dynamic setting. Prometheus is widely used in the DevOps and cloud-native computing fields. It is a Cloud Native Computing Foundation (CNCF) Graduated project.
+
+What is Grafana? 
+Grafana is an open-source analytics and monitoring platform that provides real-time analytics, monitoring, and visualization by integrating with several data sources. It is commonly used to build configurable, interactive dashboards that track the functionality of systems, infrastructure, and applications. Grafana has grown in popularity in the DevOps and IT sectors and is a member of the Cloud Native Computing Foundation (CNCF).
+
+Key Features of Prometheus and Grafana:
+Multi-Dimensional Data Model: Prometheus makes use of a versatile key-value pair data model that makes it possible to query metrics effectively and expressively. 
+Pull-based paradigm: Prometheus scrapes metrics from preset targets regularly using a pull-based paradigm. This method works best in dynamic situations. 
+PromQL Query Language: PromQL is an effective query language that can be used to analyze and manipulate gathered metrics to reveal information about the health and performance of a system. 
+Dynamic Dashboards: Provides real-time data for the production of dynamic, interactive dashboards that may be customized with different graphs, charts, and visualizations. 
+Query Editor: Offers a versatile query editor with support for source-specific query languages that makes it easy to get and visualize data from connected data sources.
+
+Task Details
+Launch Kubernetes Lab Platform 
+Installing Prometheus and Grafana
+Configure Grafana with Prometheus
+Visualize Metrics Collected from Prometheus
+Launching Lab Environment
+To launch the lab environment, click on the Start Lab button.
+Please wait until the lab environment is ready. It will take less than a minute to provision.
+Upon the provisioning of the terminal, you will receive SSH commands along with corresponding passwords for accessing the Master, Worker-1, and Worker-2.

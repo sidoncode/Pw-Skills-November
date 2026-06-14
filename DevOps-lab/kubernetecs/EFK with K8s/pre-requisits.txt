@@ -1,0 +1,32 @@
+Managing Cluster Components Logs EFK
+
+
+Lab Details
+This Lab Walks You Through Adding Elasticsearch And Kibana Integration With Kubernetes And Collecting Logs Using Filebeat.
+You Will Practice Using The Whiz Terminal To Access A Kubernetes Cluster.
+Duration: 60 Minutes
+
+Introduction
+What is ElasticSearch?
+Elasticsearch, Based On Apache Lucene, Is A Distributed, Open-Source Search And Analytics Engine. Due To Its Horizontally Scalable Design, Users Can Effortlessly Index And Search Massive Amounts Of Data Across Numerous Nodes And Clusters. Elasticsearch Is An Essential Part Of The Elastic Stack (Formerly Called The ELK Stack), Providing A Complete Search, Logging, And Data Visualization Solution Along With Logstash And Kibana.
+
+What is Kibana?
+Kibana, Used In Conjunction With Elasticsearch, Is An Open-Source Platform For Data Analysis And Visualization. Together With Elasticsearch And Logstash, It Constitutes A Component Of The Elastic Stack. An Intuitive Web Interface Called Kibana Makes It Easy To Explore, Analyze, And Visualize Data Stored In Elasticsearch.
+
+What is Filebeat?
+Filebeat, Part Of The Elastic Stack's Beats Family, Is An Open-Source, Lightweight Log Shipper And Data Shipper. Its Purpose Is To Gather, Process, And Send Log Data From Various Sources To Centralized Data Storage, Such As Logstash Or Elasticsearch, For Additional Processing, Analysis, And Visualization. Filebeat Simplifies The Management And Analysis Of Logs Centrally By Streamlining The Process Of Importing Log Data From Multiple Files And Systems.
+
+Key Benefits Of Using Elasticsearch And Kibana With Filebeat Include:
+
+End-to-End Log Management: From log collection to storage, analysis, and visualization, Elasticsearch, Kibana, and Filebeat collaboratively provide an end-to-end log management solution.
+Elastic Stack Interoperability: Elasticsearch handles data storage and search, Beats handles multiple data sources, and Logstash manages data processing. All these components work together harmoniously within the EK (Elasticsearch and Kibana) framework.
+User Authentication and Authorization: Elasticsearch and Kibana include user authentication and authorization protocols that enable administrators to restrict access to log data based on user responsibilities.
+Task Details
+Launch Kubernetes Lab Platform 
+Deploy Elasticsearch, Kibana, and Filebeat
+Configure Kibana for Log Viewing
+Open Kibana and View Logs
+Launching Lab Environment.
+To launch the lab environment, click on the Start Lab button.
+Please wait until the lab environment is ready. It will take less than a minute to provision.
+Upon the provisioning of the terminal, you will receive SSH commands along with corresponding passwords for accessing the Master, Worker-1, and Worker-2.
