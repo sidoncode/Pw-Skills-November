@@ -55,4 +55,5 @@
 | 48 | 6th-June | "Core AWS Services: Lambda, Storage, Networking, and Traffic Management" | [Link](https://miro.com/app/board/uXjVHJe_Z_U=/?share_link_id=638619433394) |
 | 49 | 7th-June | "AWS Data, Monitoring, Deployment, and Infrastructure Automation Essentials" | [Link](https://miro.com/app/board/uXjVHIlAG9o=/?share_link_id=614174680659) |
 | 50 | 13th-June | "AWS Messaging and Serverless Essentials: Queues, Notifications, Email, and SAM" | [Link](https://miro.com/app/board/uXjVHGN8NQQ=/?share_link_id=169061487379) |
+| 51 | 14th-June | "AWS Container Platforms and DevOps Certification Pathways" | [Link](https://miro.com/app/board/uXjVHGYPgVQ=/?share_link_id=307495195977) |
 
